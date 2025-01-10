@@ -10,11 +10,11 @@ import {
 } from "@shopify/polaris";
 import { SearchIcon } from "@shopify/polaris-icons";
 import React, { useState } from "react";
-import { Segment } from "../types";
+import { Condition } from "../types";
 
 interface SearchableListboxPopoverProps {
   searchEnabled?: boolean;
-  segments: Segment[];
+  segments: Condition[];
   initialSelectedSegmentIndex?: number;
   onSelect?: (segmentId: string) => void;
   placeholder?: string;

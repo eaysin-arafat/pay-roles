@@ -1,22 +1,19 @@
 import { BlockStack, Box, Button } from "@shopify/polaris";
-import { Segment } from "../../../types";
+import { Condition } from "../../../types";
 
-interface SegmentDisplayProps {
-  segment: Segment;
-  handleRemoveSegment: (id: string) => void;
+interface Props {
+  condition: Condition;
+  handleRemoveCondition: (id: string) => void;
 }
 
-const ConditionDisplay = ({
-  handleRemoveSegment,
-  segment,
-}: SegmentDisplayProps) => {
+const ConditionDisplay = ({ handleRemoveCondition, condition }: Props) => {
   return (
-    <BlockStack key={segment.id} gap={"200"}>
+    <BlockStack key={condition.id} gap={"200"}>
       <div style={{ position: "relative" }}>
-        <Box>{segment.content}</Box>
+        <Box>{condition.content}</Box>
         <div style={{ position: "absolute", top: 0, right: 0 }}>
           <Button
-            onClick={() => handleRemoveSegment(segment.id)}
+            onClick={() => handleRemoveCondition(condition.id)}
             variant="plain"
           >
             Remove

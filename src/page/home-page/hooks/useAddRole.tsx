@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Rule } from "..";
 import { conditionOptions, paymentMethodOptions } from "../../../constant/data";
+import { Rule } from "../../../types";
 
 export const useAddRule = () => {
   const [rule, setRule] = useState<Rule>({
@@ -9,7 +9,7 @@ export const useAddRule = () => {
     hide: true,
     sort: false,
     rename: false,
-    segments: [],
+    conditions: [],
     paymentMethods: [],
   });
   const [matchCondition, setMatchCondition] = useState<"All" | "Any">("All");
@@ -27,22 +27,22 @@ export const useAddRule = () => {
     }));
   };
 
-  const handleSelectSegment = (segmentId: string) => {
-    const selected = conditionOptions.find(
-      (segment) => segment.id === segmentId
-    );
-    if (selected && !rule.segments.some((seg) => seg.id === selected.id)) {
+  const handleSelectCondition = (id: string) => {
+    const selected = conditionOptions.find((condition) => condition.id === id);
+    if (selected && !rule.conditions.some((con) => con.id === selected.id)) {
       setRule((prevRule) => ({
         ...prevRule,
-        segments: [...prevRule.segments, selected],
+        conditions: [...prevRule.conditions, selected],
       }));
     }
   };
 
-  const handleRemoveSegment = (segmentId: string) => {
+  const handleRemoveCondition = (id: string) => {
     setRule((prevRule) => ({
       ...prevRule,
-      segments: prevRule.segments.filter((seg) => seg.id !== segmentId),
+      conditions: prevRule.conditions.filter(
+        (condition) => condition.id !== id
+      ),
     }));
   };
 
@@ -75,7 +75,7 @@ export const useAddRule = () => {
   };
 
   const handleSave = () => {
-    console.log(rule);
+    console.log({ ...rule, matchCondition, status });
   };
 
   return {
@@ -86,8 +86,8 @@ export const useAddRule = () => {
     setStatus,
     setMatchCondition,
     handleRenameToggle,
-    handleSelectSegment,
-    handleRemoveSegment,
+    handleSelectCondition,
+    handleRemoveCondition,
     handleSelectPaymentMethod,
     handleAddPaymentMethod,
     handleRemovePaymentMethod,

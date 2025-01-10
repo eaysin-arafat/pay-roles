@@ -19,6 +19,7 @@ const Conditions: React.FC<ConditionsProps> = ({
         segments={conditionOptions}
         onSelect={handleSelect}
         placeholder="Search customer segments"
+        key="condition-title"
         activatorNode={
           <Box>
             <Button variant="secondary" icon={PlusIcon}>
@@ -28,7 +29,7 @@ const Conditions: React.FC<ConditionsProps> = ({
         }
       />
 
-      <Card padding={"400"}>
+      <Card padding={"400"} key={"conditions-list"}>
         <BlockStack>
           <Text as="h2" variant="headingSm">
             Conditions

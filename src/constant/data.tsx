@@ -1,4 +1,3 @@
-import { Segment } from "../components/popover-with-searchable-listbox";
 import Condition01 from "../page/home-page/components/conditions/condition01";
 import Condition02 from "../page/home-page/components/conditions/condition02";
 import Condition03 from "../page/home-page/components/conditions/condition03";
@@ -16,6 +15,7 @@ import Condition15 from "../page/home-page/components/conditions/condition15";
 import Condition16 from "../page/home-page/components/conditions/condition16";
 import Condition17 from "../page/home-page/components/conditions/condition17";
 import Condition18 from "../page/home-page/components/conditions/condition18";
+import { Condition } from "../types";
 
 export const conditionOptions = [
   {
@@ -128,7 +128,7 @@ export const conditionOptions = [
   },
 ];
 
-export const paymentMethodOptions: Segment[] = [
+export const paymentMethodOptions: Condition[] = [
   {
     id: "1",
     value: "1",

@@ -1,99 +1,14 @@
-// import { BlockStack } from "@shopify/polaris";
-// import React from "react";
-// import Header from "../../components/header";
-// import ActionButtons from "./components/action-buttons";
-// import Conditions from "./components/conditions";
-// import PaymentMethods from "./components/payment-methods";
-// import RuleSettings from "./components/rule-settings";
-// import Status from "./components/status";
-// import { useAddRule } from "./hooks/useAddRole";
-
-// const AddRulePage: React.FC = () => {
-//   const {
-//     ruleName,
-//     setRuleName,
-//     hide,
-//     setHide,
-//     sort,
-//     setSort,
-//     rename,
-//     setRename,
-//     selectedPaymentMethod,
-//     handleRenameToggle,
-//     handleSelectSegment,
-//     getSelectedContent,
-//     setSelectedPaymentMethod,
-//   } = useAddRule();
-
-//   return (
-//     <BlockStack gap="300">
-//       <Header title="Add Rule" />
-
-//       <Conditions
-//         handleSelect={handleSelectSegment}
-//         getSelectedContent={getSelectedContent}
-//       />
-
-//       <RuleSettings
-//         ruleName={ruleName}
-//         selectedPaymentMethod={selectedPaymentMethod}
-//         setRuleName={setRuleName}
-//         hide={hide}
-//         setHide={setHide}
-//         sort={sort}
-//         setSort={setSort}
-//         rename={rename}
-//         setRename={setRename}
-//         handleRenameToggle={handleRenameToggle}
-//       />
-
-//       <PaymentMethods
-//         selectedPaymentMethod={selectedPaymentMethod}
-//         setSelectedPaymentMethod={setSelectedPaymentMethod}
-//         rename={rename}
-//         sort={sort}
-//       />
-
-//       <Status />
-
-//       <ActionButtons />
-//     </BlockStack>
-//   );
-// };
-
-// export default AddRulePage;
-
-import { BlockStack, Text } from "@shopify/polaris";
-import React from "react";
+import { BlockStack, Modal, Text } from "@shopify/polaris";
+import React, { useState } from "react";
 import Header from "../../components/header";
-import { Segment } from "../../types";
 import ActionButtons from "./components/action-buttons";
 import ConditionDisplay from "./components/condition-display";
 import Conditions from "./components/conditions";
+import Contact from "./components/contact";
 import PaymentMethods from "./components/payment-methods";
 import RuleSettings from "./components/rule-settings";
 import Status from "./components/status";
 import { useAddRule } from "./hooks/useAddRole";
-
-export interface PaymentMethod {
-  id: string;
-  label: string;
-  value: string;
-  newValue?: string;
-  sortOrder?: string;
-  renameEnabled: boolean;
-  renameType?: string;
-}
-
-export interface Rule {
-  id: string;
-  ruleName: string;
-  hide: boolean;
-  sort: boolean;
-  rename: boolean;
-  segments: Segment[];
-  paymentMethods: PaymentMethod[];
-}
 
 const AddRuleComponent: React.FC = () => {
   const {
@@ -103,17 +18,18 @@ const AddRuleComponent: React.FC = () => {
     setStatus,
     setMatchCondition,
     handleRenameToggle,
-    handleSelectSegment,
-    handleRemoveSegment,
+    handleRemoveCondition,
+    handleSelectCondition,
     handleSelectPaymentMethod,
     handleAddPaymentMethod,
     handleRemovePaymentMethod,
-    handleSave,
     setRule,
   } = useAddRule();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const getSelectedContent = () => {
-    if (rule.segments.length === 0) {
+    if (rule.conditions.length === 0) {
       return (
         <BlockStack>
           <Text as="p">No conditions added yet.</Text>
@@ -121,12 +37,29 @@ const AddRuleComponent: React.FC = () => {
       );
     }
 
-    return rule.segments.map((segment) => (
+    return rule.conditions.map((condition) => (
       <ConditionDisplay
-        handleRemoveSegment={handleRemoveSegment}
-        segment={segment}
+        key={condition.id}
+        condition={condition}
+        handleRemoveCondition={handleRemoveCondition}
       />
     ));
+  };
+
+  const handleSaveClick = () => setIsModalOpen(true);
+
+  const handleDiscard = () => {
+    setRule({
+      id: "",
+      ruleName: "",
+      hide: false,
+      sort: false,
+      rename: false,
+      conditions: [],
+      paymentMethods: [],
+    });
+    setStatus("Disabled");
+    setMatchCondition("All");
   };
 
   return (
@@ -135,7 +68,7 @@ const AddRuleComponent: React.FC = () => {
 
       <Conditions
         getSelectedContent={getSelectedContent}
-        handleSelect={handleSelectSegment}
+        handleSelect={handleSelectCondition}
       />
 
       <RuleSettings
@@ -156,7 +89,26 @@ const AddRuleComponent: React.FC = () => {
 
       <Status status={status} setStatus={setStatus} />
 
-      <ActionButtons handleSave={handleSave} handleDiscard={() => {}} />
+      <ActionButtons
+        handleSave={handleSaveClick}
+        handleDiscard={handleDiscard}
+      />
+
+      <Contact />
+
+      <Modal
+        open={isModalOpen}
+        size="large"
+        onClose={() => setIsModalOpen(false)}
+        title="Saved Rule Data"
+      >
+        <Modal.Section>
+          <Text as="h2">Rule Data</Text>
+          <pre>
+            <code>{JSON.stringify(rule, null, 2)}</code>
+          </pre>
+        </Modal.Section>
+      </Modal>
     </BlockStack>
   );
 };

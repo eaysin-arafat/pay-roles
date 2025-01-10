@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@shopify/polaris";
 import React from "react";
-import { Rule } from "..";
+import { Rule } from "../../../types";
 
 interface RuleSettingsProps {
   rule: Rule;

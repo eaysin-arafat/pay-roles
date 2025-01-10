@@ -11,9 +11,9 @@ import {
 import { PlusIcon, SelectIcon, XIcon } from "@shopify/polaris-icons";
 import React from "react";
 
-import { Rule } from "..";
 import SearchableListboxPopover from "../../../components/popover-with-searchable-listbox";
 import { paymentMethodOptions, renameOptions } from "../../../constant/data";
+import { Rule } from "../../../types";
 
 interface PaymentMethodsProps {
   rule: Rule;
@@ -138,8 +138,6 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                       autoComplete="on"
                       value={rule.paymentMethods[index].newValue}
                       onChange={(newValue) => {
-                        console.log(newValue);
-
                         setRule((prevRule) => {
                           const updatedMethods = [...prevRule.paymentMethods];
                           updatedMethods[index] = {
@@ -155,6 +153,8 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                       placeholder="New payment name"
                     />
                   </div>
+
+                  <div style={{ width: "20px" }}></div>
                 </div>
               )}
             </>
