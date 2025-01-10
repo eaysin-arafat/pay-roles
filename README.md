@@ -18,7 +18,7 @@ This project implements an "Add Rule" feature in a web application that allows u
 - **Shopify Polaris**: A component library for building consistent and accessible UIs.
 - **Vite**: A fast, modern build tool and development server.
 - **Yarn**: A package manager to manage project dependencies.
-- **Module Css**:
+- **Module CSS**: A CSS approach that scopes styles to individual components, ensuring no conflicts and improving maintainability with unique class names.
 
 ## Live Demo
 
@@ -28,12 +28,6 @@ You can view a live demo of this project [here](https://pay-roles-eaysin-arafats
 
 - `.gitignore`: Specifies files and folders to be ignored by Git version control.
 - `README.md`: The documentation file for the project, providing information about the app, its purpose, and how to use it.
-- `dist/`: Contains the output files after building the app, ready for deployment.
-  - `assets/`: Stores compiled static assets like JS and CSS files.
-    - `index-CpNmrz3R.js`: Compiled JavaScript file.
-    - `index-_PynFBA1.css`: Compiled CSS file.
-  - `index.html`: The main HTML file that gets served for the app.
-  - `vite.svg`: Vite logo image used for branding.
 - `eslint.config.js`: Configuration file for ESLint to enforce coding standards and best practices.
 - `index.html`: The entry point HTML file for the app.
 - `package.json`: Contains metadata about the project, dependencies, scripts, and other configurations.
