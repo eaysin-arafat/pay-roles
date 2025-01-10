@@ -10,13 +10,7 @@ import {
 } from "@shopify/polaris";
 import { SearchIcon } from "@shopify/polaris-icons";
 import React, { useState } from "react";
-
-export interface Segment {
-  label: string;
-  id: string;
-  value: string;
-  content?: React.ReactNode;
-}
+import { Segment } from "../types";
 
 interface SearchableListboxPopoverProps {
   searchEnabled?: boolean;

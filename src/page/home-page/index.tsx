@@ -1,73 +1,162 @@
-import { BlockStack, Box, Button, InlineStack } from "@shopify/polaris";
+// import { BlockStack } from "@shopify/polaris";
+// import React from "react";
+// import Header from "../../components/header";
+// import ActionButtons from "./components/action-buttons";
+// import Conditions from "./components/conditions";
+// import PaymentMethods from "./components/payment-methods";
+// import RuleSettings from "./components/rule-settings";
+// import Status from "./components/status";
+// import { useAddRule } from "./hooks/useAddRole";
+
+// const AddRulePage: React.FC = () => {
+//   const {
+//     ruleName,
+//     setRuleName,
+//     hide,
+//     setHide,
+//     sort,
+//     setSort,
+//     rename,
+//     setRename,
+//     selectedPaymentMethod,
+//     handleRenameToggle,
+//     handleSelectSegment,
+//     getSelectedContent,
+//     setSelectedPaymentMethod,
+//   } = useAddRule();
+
+//   return (
+//     <BlockStack gap="300">
+//       <Header title="Add Rule" />
+
+//       <Conditions
+//         handleSelect={handleSelectSegment}
+//         getSelectedContent={getSelectedContent}
+//       />
+
+//       <RuleSettings
+//         ruleName={ruleName}
+//         selectedPaymentMethod={selectedPaymentMethod}
+//         setRuleName={setRuleName}
+//         hide={hide}
+//         setHide={setHide}
+//         sort={sort}
+//         setSort={setSort}
+//         rename={rename}
+//         setRename={setRename}
+//         handleRenameToggle={handleRenameToggle}
+//       />
+
+//       <PaymentMethods
+//         selectedPaymentMethod={selectedPaymentMethod}
+//         setSelectedPaymentMethod={setSelectedPaymentMethod}
+//         rename={rename}
+//         sort={sort}
+//       />
+
+//       <Status />
+
+//       <ActionButtons />
+//     </BlockStack>
+//   );
+// };
+
+// export default AddRulePage;
+
+import { BlockStack, Text } from "@shopify/polaris";
 import React from "react";
-import ConditionCard from "./ConditionCard";
-import PaymentMethodsCard from "./PaymentMethodsCard";
-import RuleSettingsCard from "./RuleSettingsCard";
-import StatusCard from "./StatusCard";
+import Header from "../../components/header";
+import { Segment } from "../../types";
+import ActionButtons from "./components/action-buttons";
+import ConditionDisplay from "./components/condition-display";
+import Conditions from "./components/conditions";
+import PaymentMethods from "./components/payment-methods";
+import RuleSettings from "./components/rule-settings";
+import Status from "./components/status";
+import { useAddRule } from "./hooks/useAddRole";
+
+export interface PaymentMethod {
+  id: string;
+  label: string;
+  value: string;
+  newValue?: string;
+  sortOrder?: string;
+  renameEnabled: boolean;
+  renameType?: string;
+}
+
+export interface Rule {
+  id: string;
+  ruleName: string;
+  hide: boolean;
+  sort: boolean;
+  rename: boolean;
+  segments: Segment[];
+  paymentMethods: PaymentMethod[];
+}
 
 const AddRuleComponent: React.FC = () => {
-  const [ruleName, setRuleName] = React.useState<string>("");
-  const [hide, setHide] = React.useState<boolean>(true);
-  const [sort, setSort] = React.useState<boolean>(false);
-  const [rename, setRename] = React.useState<boolean>(false);
-  const [selectedSegments, setSelectedSegments] = React.useState<Segment[]>([]);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState<
-    Segment[]
-  >([]);
-  const [enabled, setEnabled] = React.useState<boolean>(true);
+  const {
+    rule,
+    matchCondition,
+    status,
+    setStatus,
+    setMatchCondition,
+    handleRenameToggle,
+    handleSelectSegment,
+    handleRemoveSegment,
+    handleSelectPaymentMethod,
+    handleAddPaymentMethod,
+    handleRemovePaymentMethod,
+    handleSave,
+    setRule,
+  } = useAddRule();
 
-  const handleRenameToggle = (checked: boolean) => {
-    setRename(checked);
-  };
+  const getSelectedContent = () => {
+    if (rule.segments.length === 0) {
+      return (
+        <BlockStack>
+          <Text as="p">No conditions added yet.</Text>
+        </BlockStack>
+      );
+    }
 
-  const handleSelectSegment = (segmentId: string) => {
-    // logic to add segment
-  };
-
-  const handleRemoveSegment = (segmentId: string) => {
-    // logic to remove segment
+    return rule.segments.map((segment) => (
+      <ConditionDisplay
+        handleRemoveSegment={handleRemoveSegment}
+        segment={segment}
+      />
+    ));
   };
 
   return (
     <BlockStack gap={"300"}>
-      <Box padding={"100"}>
-        <Text as="h1" variant="headingMd">
-          Add rule
-        </Text>
-      </Box>
+      <Header title="Add a new rule" />
 
-      <ConditionCard
-        selectedSegments={selectedSegments}
-        onSelect={handleSelectSegment}
-        onRemoveSegment={handleRemoveSegment}
+      <Conditions
+        getSelectedContent={getSelectedContent}
+        handleSelect={handleSelectSegment}
       />
 
-      <RuleSettingsCard
-        ruleName={ruleName}
-        setRuleName={setRuleName}
-        hide={hide}
-        setHide={setHide}
-        sort={sort}
-        setSort={setSort}
-        rename={rename}
+      <RuleSettings
+        rule={rule}
+        setRule={setRule}
+        matchCondition={matchCondition}
+        setMatchCondition={setMatchCondition}
         handleRenameToggle={handleRenameToggle}
       />
 
-      <PaymentMethodsCard
-        selectedPaymentMethod={selectedPaymentMethod}
-        setSelectedPaymentMethod={setSelectedPaymentMethod}
-        sort={sort}
-        rename={rename}
+      <PaymentMethods
+        rule={rule}
+        setRule={setRule}
+        handleAddPaymentMethod={handleAddPaymentMethod}
+        handleRemovePaymentMethod={handleRemovePaymentMethod}
+        handleSelectPaymentMethod={handleSelectPaymentMethod}
       />
 
-      <StatusCard enabled={enabled} setEnabled={setEnabled} />
+      <Status status={status} setStatus={setStatus} />
 
-      <Box paddingBlock={"400"}>
-        <InlineStack gap={"200"}>
-          <Button variant="primary">Save</Button>
-          <Button variant="secondary">Discard</Button>
-        </InlineStack>
-      </Box>
+      <ActionButtons handleSave={handleSave} handleDiscard={() => {}} />
     </BlockStack>
   );
 };

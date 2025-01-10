@@ -17,7 +17,7 @@ import Condition16 from "../page/home-page/components/conditions/condition16";
 import Condition17 from "../page/home-page/components/conditions/condition17";
 import Condition18 from "../page/home-page/components/conditions/condition18";
 
-export const segments = [
+export const conditionOptions = [
   {
     label: "New customers",
     id: "1",
