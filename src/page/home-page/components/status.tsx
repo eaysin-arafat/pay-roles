@@ -1,12 +1,12 @@
 import { BlockStack, Card, RadioButton, Text } from "@shopify/polaris";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface StatusProps {
   status: string;
   setStatus: Dispatch<SetStateAction<"Enabled" | "Disabled">>;
 }
 
-const Status: React.FC<StatusProps> = ({ status, setStatus }: StatusProps) => {
+const Status: React.FC<StatusProps> = ({ status, setStatus }) => {
   return (
     <Card padding={"400"}>
       <BlockStack gap={"200"}>

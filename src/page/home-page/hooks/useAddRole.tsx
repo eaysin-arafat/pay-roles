@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { conditionOptions, paymentMethodOptions } from "../../../constant/data";
-import { Rule } from "../../../types";
+import { MatchConditionType, Rule, StatusType } from "../../../types";
 
 export const initialRuleState: Rule = {
   id: "",
@@ -11,9 +11,6 @@ export const initialRuleState: Rule = {
   conditions: [],
   paymentMethods: [],
 };
-
-export type MatchConditionType = "All" | "Any";
-export type StatusType = "Enabled" | "Disabled";
 
 export const useAddRule = () => {
   const [rule, setRule] = useState<Rule>(initialRuleState);

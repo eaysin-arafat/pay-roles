@@ -6,7 +6,7 @@ interface Props {
   onRemove: (id: string) => void;
 }
 
-const ConditionDisplay = ({ onRemove, condition }: Props) => {
+const ConditionDisplay: React.FC<Props> = ({ onRemove, condition }) => {
   return (
     <BlockStack key={condition.id} gap={"200"}>
       <div style={{ position: "relative" }}>

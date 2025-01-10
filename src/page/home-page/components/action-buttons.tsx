@@ -5,7 +5,10 @@ interface ActionButtonsProps {
   handleDiscard: () => void;
 }
 
-const ActionButtons = ({ handleSave, handleDiscard }: ActionButtonsProps) => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({
+  handleSave,
+  handleDiscard,
+}) => {
   return (
     <Box paddingBlock={"400"}>
       <InlineStack gap={"200"}>

@@ -24,3 +24,6 @@ export interface Rule {
   conditions: Condition[];
   paymentMethods: PaymentMethod[];
 }
+
+export type MatchConditionType = "All" | "Any";
+export type StatusType = "Enabled" | "Disabled";
