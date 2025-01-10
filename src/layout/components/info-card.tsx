@@ -21,7 +21,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
         <p>{message}</p>
       </InlineStack>
       {buttonText && (
-        <Button variant="secondary" url={buttonLink}>
+        <Button variant="secondary" url={buttonLink} fullWidth={false}>
           {buttonText}
         </Button>
       )}

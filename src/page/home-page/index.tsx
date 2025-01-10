@@ -1,16 +1,16 @@
 import { BlockStack, Modal, Text } from "@shopify/polaris";
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../../components/header";
 import ActionButtons from "./components/action-buttons";
 import ConditionDisplay from "./components/condition-display";
 import Conditions from "./components/conditions";
-import Contact from "./components/contact";
-import PaymentMethods from "./components/payment-methods";
+import Contact from "./components/contact/contact";
+import PaymentMethods from "./components/payment-methods/payment-methods";
 import RuleSettings from "./components/rule-settings";
 import Status from "./components/status";
-import { useAddRule } from "./hooks/useAddRole";
+import { initialRuleState, useAddRule } from "./hooks/useAddRole";
 
-const AddRuleComponent: React.FC = () => {
+const AddRuleComponent = () => {
   const {
     rule,
     matchCondition,
@@ -28,20 +28,16 @@ const AddRuleComponent: React.FC = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const getSelectedContent = () => {
+  const renderSelectedConditions = () => {
     if (rule.conditions.length === 0) {
-      return (
-        <BlockStack>
-          <Text as="p">No conditions added yet.</Text>
-        </BlockStack>
-      );
+      return <Text as="p">No conditions added yet.</Text>;
     }
 
     return rule.conditions.map((condition) => (
       <ConditionDisplay
         key={condition.id}
         condition={condition}
-        handleRemoveCondition={handleRemoveCondition}
+        onRemove={handleRemoveCondition}
       />
     ));
   };
@@ -49,15 +45,7 @@ const AddRuleComponent: React.FC = () => {
   const handleSaveClick = () => setIsModalOpen(true);
 
   const handleDiscard = () => {
-    setRule({
-      id: "",
-      ruleName: "",
-      hide: false,
-      sort: false,
-      rename: false,
-      conditions: [],
-      paymentMethods: [],
-    });
+    setRule(initialRuleState);
     setStatus("Disabled");
     setMatchCondition("All");
   };
@@ -67,7 +55,7 @@ const AddRuleComponent: React.FC = () => {
       <Header title="Add a new rule" />
 
       <Conditions
-        getSelectedContent={getSelectedContent}
+        renderSelectedConditions={renderSelectedConditions}
         handleSelect={handleSelectCondition}
       />
 
@@ -103,7 +91,9 @@ const AddRuleComponent: React.FC = () => {
         title="Saved Rule Data"
       >
         <Modal.Section>
-          <Text as="h2">Rule Data</Text>
+          <Text as="h2" variant="headingMd">
+            Rule Data
+          </Text>
           <pre>
             <code>{JSON.stringify(rule, null, 2)}</code>
           </pre>

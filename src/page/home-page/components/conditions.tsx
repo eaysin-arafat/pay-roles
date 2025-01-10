@@ -6,12 +6,12 @@ import { conditionOptions } from "../../../constant/data";
 
 interface ConditionsProps {
   handleSelect: (segmentId: string) => void;
-  getSelectedContent: () => React.ReactNode;
+  renderSelectedConditions: () => React.ReactNode;
 }
 
 const Conditions: React.FC<ConditionsProps> = ({
   handleSelect,
-  getSelectedContent,
+  renderSelectedConditions,
 }) => {
   return (
     <>
@@ -31,10 +31,10 @@ const Conditions: React.FC<ConditionsProps> = ({
 
       <Card padding={"400"} key={"conditions-list"}>
         <BlockStack>
-          <Text as="h2" variant="headingSm">
+          <Text as="h2" variant="headingMd">
             Conditions
           </Text>
-          <BlockStack gap={"400"}>{getSelectedContent()}</BlockStack>
+          <BlockStack gap={"400"}>{renderSelectedConditions()}</BlockStack>
         </BlockStack>
       </Card>
     </>

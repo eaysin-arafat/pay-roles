@@ -10,10 +10,11 @@ import {
 } from "@shopify/polaris";
 import { PlusIcon, SelectIcon, XIcon } from "@shopify/polaris-icons";
 import React from "react";
+import styles from "./payment-methods.module.css";
 
-import SearchableListboxPopover from "../../../components/popover-with-searchable-listbox";
-import { paymentMethodOptions, renameOptions } from "../../../constant/data";
-import { Rule } from "../../../types";
+import SearchableListboxPopover from "../../../../components/popover-with-searchable-listbox";
+import { paymentMethodOptions, renameOptions } from "../../../../constant/data";
+import { Rule } from "../../../../types";
 
 interface PaymentMethodsProps {
   rule: Rule;
@@ -30,29 +31,48 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   handleAddPaymentMethod,
   handleSelectPaymentMethod,
 }) => {
+  const handleRenameTypeChange = (value: string, index: number) => {
+    setRule((prevRule) => {
+      const updatedMethods = [...prevRule.paymentMethods];
+      updatedMethods[index] = {
+        ...updatedMethods[index],
+        renameType: value,
+      };
+      return {
+        ...prevRule,
+        paymentMethods: updatedMethods,
+      };
+    });
+  };
+
+  const handleNewValueChange = (newValue: string, index: number) => {
+    setRule((prevRule) => {
+      const updatedMethods = [...prevRule.paymentMethods];
+      updatedMethods[index] = {
+        ...updatedMethods[index],
+        newValue: newValue,
+      };
+      return {
+        ...prevRule,
+        paymentMethods: updatedMethods,
+      };
+    });
+  };
+
   return (
     <Card padding={"400"}>
       <BlockStack gap={"200"}>
-        <Text as="h2" variant="headingSm">
+        <Text as="h2" variant="headingMd">
           Payment methods
         </Text>
         <Text as="p">
           Select from existing or type to add your payment method
         </Text>
-        <Divider />
 
         {rule.paymentMethods.length > 0 &&
           rule.paymentMethods.map((paymentMethod, index) => (
             <>
-              <div
-                key={paymentMethod.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  width: "100%",
-                }}
-              >
+              <div key={paymentMethod.id} className={styles.paymentItem}>
                 {rule.sort && (
                   <div style={{ width: "120px" }}>
                     <TextField
@@ -73,22 +93,8 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                     onSelect={(id) => handleSelectPaymentMethod(id, index)}
                     placeholder="Select payment method"
                     activatorNode={
-                      <div
-                        style={{
-                          border: "1px solid gray",
-                          padding: "4px 8px",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          marginTop: "4px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
+                      <div className={styles.activatorNode}>
+                        <div className={styles.activatorContent}>
                           <Text as="p">
                             {paymentMethod?.label || "Choose a method"}
                           </Text>
@@ -114,20 +120,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                     <Select
                       label
                       options={renameOptions}
-                      onChange={(value) => {
-                        setRule((prevRule) => {
-                          const updatedMethods = [...prevRule.paymentMethods];
-                          updatedMethods[index] = {
-                            ...updatedMethods[index],
-                            renameType: value,
-                          };
-
-                          return {
-                            ...prevRule,
-                            paymentMethods: updatedMethods,
-                          };
-                        });
-                      }}
+                      onChange={(value) => handleRenameTypeChange(value, index)}
                       value={rule.paymentMethods[index].renameType}
                     />
                   </div>
@@ -137,19 +130,9 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                       label
                       autoComplete="on"
                       value={rule.paymentMethods[index].newValue}
-                      onChange={(newValue) => {
-                        setRule((prevRule) => {
-                          const updatedMethods = [...prevRule.paymentMethods];
-                          updatedMethods[index] = {
-                            ...updatedMethods[index],
-                            newValue: newValue,
-                          };
-                          return {
-                            ...prevRule,
-                            paymentMethods: updatedMethods,
-                          };
-                        });
-                      }}
+                      onChange={(newValue) =>
+                        handleNewValueChange(newValue, index)
+                      }
                       placeholder="New payment name"
                     />
                   </div>
@@ -160,7 +143,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
             </>
           ))}
 
-        <Divider />
+        {rule?.paymentMethods?.length !== 0 && <Divider />}
 
         <Button
           variant="secondary"

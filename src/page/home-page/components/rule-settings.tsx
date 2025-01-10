@@ -27,7 +27,7 @@ const RuleSettings: React.FC<RuleSettingsProps> = ({
 }) => {
   return (
     <Card padding={"400"}>
-      <Text as="h2" variant="headingSm">
+      <Text as="h2" variant="headingMd">
         Rule settings
       </Text>
       <BlockStack gap={"200"}>
@@ -45,7 +45,9 @@ const RuleSettings: React.FC<RuleSettingsProps> = ({
 
       <Box paddingBlockStart="200">
         <BlockStack gap={"200"}>
-          <Text as="p">Hide, sort or rename payment methods</Text>
+          <Text as="p" variant="headingMd">
+            Hide, sort or rename payment methods
+          </Text>
           <BlockStack>
             <Checkbox
               label="Hide"
@@ -72,7 +74,9 @@ const RuleSettings: React.FC<RuleSettingsProps> = ({
 
           <Box>
             <BlockStack gap={"200"}>
-              <Text as="h1">Match conditions</Text>
+              <Text as="h1" variant="headingMd">
+                Match conditions
+              </Text>
 
               <BlockStack gap={"100"}>
                 <RadioButton

@@ -17,7 +17,7 @@ const AlertCard = () => {
             <div>
               <Icon source={AlertTriangleIcon} accessibilityLabel="" />
             </div>
-            <Text as="h2" variant="bodyMd">
+            <Text as="h2" variant="headingMd">
               No plan needed!
             </Text>
           </InlineStack>

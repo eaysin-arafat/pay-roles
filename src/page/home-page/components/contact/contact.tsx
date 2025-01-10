@@ -7,23 +7,18 @@ import {
   Text,
 } from "@shopify/polaris";
 import { ChatIcon } from "@shopify/polaris-icons";
+import styles from "./contact.module.css";
 
 const Contact = () => {
   return (
     <Card padding={"0"}>
       <BlockStack gap={"400"}>
-        <div
-          style={{
-            padding: "10px 15px",
-            backgroundColor: "#066e52",
-            color: "white",
-          }}
-        >
+        <div className={styles.header}>
           <InlineStack align="start" gap={"200"} blockAlign="center">
             <div>
               <Icon source={ChatIcon} accessibilityLabel="" />
             </div>
-            <Text as="h2" variant="bodyMd">
+            <Text as="h2" variant="headingMd">
               Need help?
             </Text>
           </InlineStack>

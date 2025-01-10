@@ -1,0 +1,84 @@
+- .gitignore
+- README.md
+- dist
+  - assets
+    - index-CpNmrz3R.js
+    - index-_PynFBA1.css
+  - index.html
+  - vite.svg
+- eslint.config.js
+- index.html
+- package.json
+- project_structure.text
+- public
+  - vite.svg
+- src
+  - App.tsx
+  - assets
+    - react.svg
+  - components
+    - header.tsx
+    - loading
+      - loading.module.css
+      - loading.tsx
+    - popover-with-searchable-listbox.tsx
+    - providers
+      - PolarisProvider.tsx
+    - searchable-select.tsx
+  - constant
+    - data.tsx
+  - hooks
+  - index.css
+  - layout
+    - components
+      - alert-card.tsx
+      - info-card.tsx
+    - root-layout.tsx
+    - sidebar.tsx
+  - main.tsx
+  - page
+    - home-page
+      - components
+        - action-buttons.tsx
+        - condition-display.tsx
+        - conditions
+          - condition01.tsx
+          - condition02.tsx
+          - condition03.tsx
+          - condition04.tsx
+          - condition05.tsx
+          - condition06.tsx
+          - condition07.tsx
+          - condition08.tsx
+          - condition09.tsx
+          - condition10.tsx
+          - condition11.tsx
+          - condition12.tsx
+          - condition13.tsx
+          - condition14.tsx
+          - condition15.tsx
+          - condition16.tsx
+          - condition17.tsx
+          - condition18.tsx
+          - condition20.tsx
+        - conditions.tsx
+        - contact
+          - contact.module.css
+          - contact.tsx
+        - payment-methods
+          - payment-methods.module.css
+          - payment-methods.tsx
+        - rule-settings.tsx
+        - status.tsx
+      - hooks
+        - useAddRole.tsx
+      - index.tsx
+  - types
+    - index.ts
+  - utils
+  - vite-env.d.ts
+- tsconfig.app.json
+- tsconfig.json
+- tsconfig.node.json
+- vite.config.ts
+- yarn.lock

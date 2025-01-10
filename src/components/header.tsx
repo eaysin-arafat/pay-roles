@@ -8,7 +8,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
     <Box padding={"100"}>
-      <Text as="h1" variant="headingMd">
+      <Text as="h1" variant="headingXl">
         {title}
       </Text>
     </Box>

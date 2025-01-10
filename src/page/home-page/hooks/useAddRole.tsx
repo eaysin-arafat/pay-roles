@@ -2,18 +2,24 @@ import { useState } from "react";
 import { conditionOptions, paymentMethodOptions } from "../../../constant/data";
 import { Rule } from "../../../types";
 
+export const initialRuleState: Rule = {
+  id: "",
+  ruleName: "",
+  hide: true,
+  sort: false,
+  rename: false,
+  conditions: [],
+  paymentMethods: [],
+};
+
+export type MatchConditionType = "All" | "Any";
+export type StatusType = "Enabled" | "Disabled";
+
 export const useAddRule = () => {
-  const [rule, setRule] = useState<Rule>({
-    id: `${Date.now()}`,
-    ruleName: "",
-    hide: true,
-    sort: false,
-    rename: false,
-    conditions: [],
-    paymentMethods: [],
-  });
-  const [matchCondition, setMatchCondition] = useState<"All" | "Any">("All");
-  const [status, setStatus] = useState<"Enabled" | "Disabled">("Enabled");
+  const [rule, setRule] = useState<Rule>(initialRuleState);
+  const [matchCondition, setMatchCondition] =
+    useState<MatchConditionType>("All");
+  const [status, setStatus] = useState<StatusType>("Enabled");
 
   const handleRenameToggle = (checked: boolean) => {
     setRule((prevRule) => ({
